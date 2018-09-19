@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
-import { getInitialData } from '../utils/api'
+import React, { Component } from 'react'
+import { handleInitialData } from '../actions/shared'
+import { connect } from 'react-redux'
+import HomePage from './HomePage'
+// import { BrowserRouter as Router } from 'react-router-dom'
 
 class App extends Component {
   componentDidMount(){
-    getInitialData()
-      .then(({users,questions}) => {
-        console.log("Users:", users)
-        console.log("questions:", questions)
-      })
+    this.props.dispatch(handleInitialData())
   }
   render() {
     return (
-      <div className="App">
-        APPPPPPPP
-      </div>
+        <div className="App">
+          <HomePage />
+        </div>
     );
   }
 }
 
-export default App;
+export default connect()(App);
