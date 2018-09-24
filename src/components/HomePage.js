@@ -1,36 +1,31 @@
 import React, { Component } from 'react'
-import UnansweredQuestions from './UnansweredQuestions'
-import { connect } from 'react-redux'
-// import { Link } from 'react-router-dom'
+import QuestionList from './QuestionList'
+import { ANS_QUES, UNANS_QUES } from '../utils/helper'
 
 class HomePage extends Component{
+  state = {
+    QuestionType : UNANS_QUES,
+  }
+
+  toggleQuestionList = (questionToggle) =>{
+    this.setState(() => ({
+      QuestionType : questionToggle,
+    }))
+  }
+
   render(){
-    const { QuestionIds, AnswerIds } = this.props
+    const questionList = this.state.QuestionType
     return(
       <div>
-        <nav>
-          <div className="nav-wrapper cyan darken-4">
-            <a href="home" className="brand-logo left">Would You Rather</a>
-            <ul id="nav-mobile" className="right">
-              {/*<li><Link >Unanswered</Link></li>
-                          <li><Link >Answered</Link></li>
-                          <li><Link >Leaderboard</Link></li>
-                          <li><Link >Logout</Link></li>*/}
-              <li><a >Unanswered</a></li>
-              <li><a >Answered</a></li>
-              <li><a >Leaderboard</a></li>
-              <li><a >Logout</a></li>
-            </ul>
-          </div>
-        </nav>
         <div className="container">
+          <ul className="pagination center"
+            onClick = {(event) => onHandleToggle(event.target,this.state.questionList,this.toggleQuestionList)} >
+            <li className="waves-effect active" style={{border:'1px solid #000'}}><a>{UNANS_QUES}</a></li>
+            <li className="waves-effect" style={{border:'1px solid #000'}}><a>{ANS_QUES}</a></li>
+          </ul>
+
           <div className="row">
-            {QuestionIds.map((id) => (
-              hasAnsweredQuestion(id,AnswerIds) &&
-              <div key={id} className="col m6 offset-m3">
-                <UnansweredQuestions id={id} />
-              </div>
-            ))}
+            <QuestionList QuestionType = {questionList} />
           </div>
         </div>
       </div>
@@ -38,25 +33,19 @@ class HomePage extends Component{
   }
 }
 
-function hasAnsweredQuestion(id,answerId){
-  let quesIdlen = answerId.length
-  let newquesIdlen = answerId.filter((quesId) => quesId !== id).length
-  if (quesIdlen === newquesIdlen){
-    return false
-  }
-  return true
-}
+const onHandleToggle = (target,state,toggleFunc) =>{
+  const value = target.innerHTML
+  const UL = target.parentElement.parentElement
+  const parentLi = target.parentElement
+  const CLASS_ACTIVE = "waves-effect active"
+  const CLASS = "waves-effect"
 
-function mapStateToProps ({ questions, users, authedUser }){
-  let quesAns = []
-  if(users[authedUser]){
-    quesAns = Object.keys(users[authedUser].answers)
-  }
-  return {
-    QuestionIds: Object.keys(questions)
-      .sort((a,b) => questions[b].timestamp - questions[a].timestamp),
-    AnswerIds: quesAns,
+  if(value !== state){
+    UL.firstChild.className = CLASS
+    UL.lastChild.className = CLASS
+    parentLi.className = CLASS_ACTIVE
+    toggleFunc(value)
   }
 }
 
-export default connect(mapStateToProps)(HomePage);
+export default HomePage;

@@ -1,0 +1,10 @@
+.opt-text{
+  font-size: 120%;
+}
+
+.box{
+  min-width: 100px;
+  height: 100%;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+}
