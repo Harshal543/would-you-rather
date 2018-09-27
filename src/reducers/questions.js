@@ -1,4 +1,4 @@
-import { RECEIVE_QUESTIONS, ADD_VOTES } from '../actions/questions'
+import { RECEIVE_QUESTIONS, ADD_VOTES, ADD_NEW_QUESTION } from '../actions/questions'
 
 function votes(state = {}, action) {
   switch(action.type){
@@ -39,6 +39,19 @@ export default function questions(state = {} ,action){
         ...state,
         [qid] : question(state[qid],action)
 
+      }
+    case ADD_NEW_QUESTION :
+      const { id, timestamp, author, optionOne, optionTwo } = action
+      console.log('reducer',optionOne,optionTwo)
+      return {
+        ...state,
+        [id] : {
+          id,
+          timestamp,
+          author,
+          optionOne,
+          optionTwo,
+        }
       }
     default :
       return state

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { OPTION_ONE, OPTION_TWO } from '../utils/helper'
 import '../css/answedques.css'
 
 class AnsweredQuestion extends Component{
@@ -9,8 +10,8 @@ class AnsweredQuestion extends Component{
     const optionOneVotes = question.optionOne.votes.length
     const optionTwoVotes = question.optionTwo.votes.length
     const totalVotes = optionOneVotes + optionTwoVotes
-    const optionOnePercent = Math.round(((optionOneVotes*100/totalVotes) + 0.00001) * 100) / 100
-    const optionTwoPercent = Math.round(((optionTwoVotes*100/totalVotes) + 0.00001) * 100) / 100
+    const optionOnePercent = round(optionOneVotes,totalVotes)
+    const optionTwoPercent = round(optionTwoVotes,totalVotes)
     return(
       <div className="container">
         <div className="row">
@@ -33,7 +34,7 @@ class AnsweredQuestion extends Component{
               <div className="row center">
                 <h5 className="left-align">Result:</h5>
                 <div className="box row z-depth-1">
-                  { authedUserResponse === 'optionOne' &&
+                  { authedUserResponse === OPTION_ONE &&
                       <p style={{color : '#ee6e73'}}><b>Your response</b></p>}
                   <div className="col s12">
                     <h5 className="opt-text"><b>Would you rather {question.optionOne.text} ..?</b></h5>
@@ -47,7 +48,7 @@ class AnsweredQuestion extends Component{
                   </div>
                 </div>
                 <div className="box row z-depth-1">
-                  { authedUserResponse === 'optionTwo' &&
+                  { authedUserResponse === OPTION_TWO &&
                       <p style={{color : '#ee6e73'}}><b>Your response</b></p>}
                   <div className="col s12">
                     <h5 className="opt-text"><b>Would you rather {question.optionTwo.text} ..?</b></h5>
@@ -68,6 +69,10 @@ class AnsweredQuestion extends Component{
       </div>
     )
   }
+}
+
+function round(optionVotes,totalVotes){
+  return Math.round(((optionVotes*100/totalVotes) + 0.00001) * 100) / 100
 }
 
 function mapStateToProps({ questions, users, authedUser }, { id }){

@@ -1,13 +1,13 @@
-import { getInitialData, saveQuestionAnswer } from '../utils/api'
-import { receiveQuestions, addVote } from './questions'
-import { receiveUsers, addAnswer } from './users'
+import { getInitialData, saveQuestionAnswer, saveQuestion } from '../utils/api'
+import { receiveQuestions, addVote, addNewQuestion } from './questions'
+import { receiveUsers, addAnswer, addQuestion } from './users'
 import { setAuthedUser } from './authedUser'
 import { showLoading, hideLoading } from 'react-redux-loading'
 
 const AUTHED_ID = 'johndoe'
 
 export function handleInitialData(){
-  return (dispatch) =>{
+  return (dispatch) => {
     dispatch(showLoading())
     return getInitialData()
       .then(({users, questions}) => {
@@ -20,9 +20,9 @@ export function handleInitialData(){
 }
 
 export function handleSaveAnswer(qid,optionSelected){
-  return (dispatch, getState) =>{
+  return (dispatch, getState) => {
     const { authedUser } = getState()
-    const params ={
+    const params = {
       authedUser,
       qid,
       answer: optionSelected,
@@ -30,9 +30,30 @@ export function handleSaveAnswer(qid,optionSelected){
     dispatch(showLoading())
 
     return saveQuestionAnswer(params)
-      .then(()=>{
+      .then(() => {
         dispatch(addAnswer(params))
         dispatch(addVote(params))
+        dispatch(hideLoading())
+      })
+      .catch((e) => {
+        alert('error')
+      })
+  }
+}
+
+export function handleAddQuestion(optionOneText,optionTwoText){
+  return (dispatch,getState) => {
+    const { authedUser } = getState()
+    const params = {
+      optionOneText,
+      optionTwoText,
+      author: authedUser,
+    }
+
+    return saveQuestion(params)
+      .then((question) => {
+        dispatch(addQuestion(question))
+        dispatch(addNewQuestion(question))
         dispatch(hideLoading())
       })
   }
