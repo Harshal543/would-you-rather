@@ -8,7 +8,6 @@ class QuestionList extends Component{
     const { QuestionIds, AnswerIds, QuestionType } = this.props
     return(
       <div>
-        {/*<h4 className="center" >{QuestionType}</h4>*/}
         { QuestionType === UNANS_QUES && (
             QuestionIds.map((id) => (
               !hasAnsweredQuestion(id,AnswerIds) &&

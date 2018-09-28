@@ -36,7 +36,7 @@ export function handleSaveAnswer(qid,optionSelected){
         dispatch(hideLoading())
       })
       .catch((e) => {
-        alert('error')
+        alert('Error in submitting answer. Try again')
       })
   }
 }
@@ -49,12 +49,16 @@ export function handleAddQuestion(optionOneText,optionTwoText){
       optionTwoText,
       author: authedUser,
     }
+    dispatch(showLoading())
 
     return saveQuestion(params)
       .then((question) => {
         dispatch(addQuestion(question))
         dispatch(addNewQuestion(question))
         dispatch(hideLoading())
+      })
+      .catch((e) => {
+        alert('Error! try again')
       })
   }
 }
