@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { OPTION_ONE, OPTION_TWO } from '../utils/helper'
 import { handleAddQuestion } from '../actions/shared'
 
@@ -8,7 +9,7 @@ class NewQuestion extends Component{
   state = {
     optionOneText : '',
     optionTwoText : '',
-    submitStatus : false
+    submitStatus : false,
   }
 
   handleSubmit = (btn) =>{
@@ -24,21 +25,21 @@ class NewQuestion extends Component{
       )
     setTimeout(() => {
       btn.disabled = false
-      this.handleClear()
     },1000)
   }
 
   handleChange = (optionText,inputBox) => {
-    inputBox === OPTION_ONE ?
-      this.setState(() => ({
-        optionOneText : optionText
-      }))
-      : (
-        inputBox === OPTION_TWO &&
-          this.setState(() => ({
-            optionTwoText : optionText
-          }))
-      )
+    optionText.trim() !== '' && (
+      (inputBox === OPTION_ONE) ?
+        this.setState(() => ({
+          optionOneText : optionText
+        }))
+        : (
+          inputBox === OPTION_TWO &&
+            this.setState(() => ({
+              optionTwoText : optionText
+            }))
+        ))
   }
 
   handleClear = () => {
@@ -49,12 +50,13 @@ class NewQuestion extends Component{
   }
 
   render(){
-
     return(
       <div className="container">
+        {this.state.submitStatus && <Redirect to='/' />}
         <h4 className="center-align red-text text-accent-3">Ask New Question</h4>
         <div className="row">
-          <div className="card-panel row z-depth-1 center col m8 offset-m2" style={{border:'1px solid #ee6e73',borderRadius:'10px'}}>
+          <div className="card-panel row z-depth-1 center col m8 offset-m2"
+            style={{border:'1px solid #ee6e73',borderRadius:'10px',paddingBottom:'2%'}}>
             <h5><b>Would you rather?</b></h5>
             <div className="input-field col m10 offset-m1">
               <input id="option_one" type="text"
@@ -77,7 +79,6 @@ class NewQuestion extends Component{
             <button className="btn right" onClick={(e) => this.handleSubmit(e.target)}>Add</button>
           </div>
         </div>
-        {this.state.submitStatus && <p className="center-align" style={{color:'#ee6e73'}}><b>Question Added</b></p>}
       </div>
     )
   }
