@@ -7,6 +7,7 @@ import NavBar from './NavBar'
 import NewQuestion from './NewQuestion'
 import Question from './Question'
 import LeaderBoard from './LeaderBoard'
+import Login from './Login'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class App extends Component {
@@ -17,16 +18,17 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
+          <NavBar />
+          <LoadingBar />
           <div className="App">
-            <NavBar />
-            <LoadingBar />
-            {this.props.loading === true ? <h4>Loading..</h4>//here signIn page
-              : <div>
-                  <Route exact path='/' component={HomePage} />
-                  <Route path='/questions/:id' component={Question} />
-                  <Route path='/add' component={NewQuestion} />
-                  <Route path='/leaderboard' component={LeaderBoard} />
-                </div>}
+            {this.props.loading === true ? null
+              : this.props.authedUser === null ? <Login />
+                  :<div>
+                    <Route exact path='/' component={HomePage} />
+                    <Route path='/questions/:id' component={Question} />
+                    <Route path='/add' component={NewQuestion} />
+                    <Route path='/leaderboard' component={LeaderBoard} />
+                  </div>}
           </div>
         </Fragment>
       </Router>
@@ -34,9 +36,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps ({ authedUser, questions }) {
+function mapStateToProps ({ loading, authedUser }) {
   return {
-    loading: authedUser === null
+    loading,
+    authedUser,
   }
 }
 
