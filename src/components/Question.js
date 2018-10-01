@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { hasAnsweredQuestion } from '../utils/helper'
 import AnsweredQuestion from './AnsweredQuestion'
 import UnansweredQuestion from './UnansweredQuestion'
+import PageNotFound from './PageNotFound'
 
 class Question extends Component{
   render(){
@@ -11,7 +12,7 @@ class Question extends Component{
       questions[id] ?
         (hasAnsweredQuestion(id,AnswerIds) ? <AnsweredQuestion id={id} />
           : <UnansweredQuestion id={id}/>)
-        :<h5 className="center-align" >Question not found</h5>
+        : <PageNotFound />
     )
   }
 }
