@@ -2,7 +2,7 @@
 
 A WebApp created using React and Redux where user can answer and ask fun would you rather type questions. See how many people have voted for same option as you or oppossing option. App has Leardbord where you can see top three leaders and your score.
 
-This app is hosted on [Would you rather](https://would-you-rather-app-63419.herokuapp.com/)
+This app is hosted on [Would you rather](https://would-you-rather-app-543.herokuapp.com/)
 
 ## Logging in
 
