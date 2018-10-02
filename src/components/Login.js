@@ -1,6 +1,7 @@
 import React , { Component } from 'react'
 import { connect } from 'react-redux'
 import { setAuthedUser } from '../actions/authedUser'
+import md5 from 'md5'
 
 class Login extends Component{
   state ={
@@ -12,7 +13,7 @@ class Login extends Component{
   handleChange = (value,target) => {
     target.id === 'user_name' ?
       this.setState(() => ({
-        userName : value.trim(),
+        userName : value.trim(),//restricting so user does not accidently puts space
       }))
       : (target.id === 'password' &&
         this.setState(() => ({
@@ -30,11 +31,11 @@ class Login extends Component{
     const { userName, password } = this.state
     const { userInfo } = this.props
     const userNames = Object.keys(userInfo)
-    if(!userNames.includes(userName)){
+    if(!userNames.includes(userName)){//user not in Data
       this.handleError()
       return 0
     }
-    if(userInfo[userName].userPwd !== password){
+    if(userInfo[userName].userPwd !== md5(password)){//password doesn't match
       this.handleError()
       return 0
     }
@@ -50,7 +51,7 @@ class Login extends Component{
               <h5 className="center-align">Please Log In to continue..</h5>
             </div>
             <div>
-              {this.state.error &&
+              {this.state.error && //error
                 <span className="col s12 center-align" style={{color:'red'}} >Invalid Username or password</span>}
               <div className="input-field col m8 offset-m2">
                 <input id="user_name" type="text"
@@ -67,6 +68,29 @@ class Login extends Component{
               <button className="btn col m2 offset-m5" onClick = {() => this.handleLogIn()}>Log In</button>
             </div>
           </div>
+          <table className="col m6 offset-m3">
+            <thead>
+              <tr>
+                <th>Usernames</th>
+                <th>Password</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>sarahedo</td>
+                <td>sarahedo</td>
+              </tr>
+              <tr>
+                <td>johndoe</td>
+                <td>johndoe</td>
+              </tr>
+              <tr>
+                <td>tylermcginnis</td>
+                <td>tylermcginnis</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     )

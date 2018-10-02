@@ -5,7 +5,7 @@ export default function PageNotFound(){
     <div className="container">
       <div className="card-panel center">
         <h5>404 Page not found</h5>
-        <p>Sorry! Question you are looking for does not exists</p>
+        <p>Sorry! Page you are looking for does not exists</p>
       </div>
     </div>
   )

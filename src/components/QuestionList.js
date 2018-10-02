@@ -8,7 +8,7 @@ class QuestionList extends Component{
     const { QuestionIds, AnswerIds, QuestionType } = this.props
     return(
       <div>
-        { QuestionType === UNANS_QUES && (
+        { QuestionType === UNANS_QUES && ( // categorize question view for home
             QuestionIds.map((id) => (
               !hasAnsweredQuestion(id,AnswerIds) &&
               <div key={id} className="col m8 offset-m2">

@@ -12,9 +12,9 @@ class NavBar extends Component {
     return(
       <nav>
         <div className="nav-wrapper cyan darken-4">
-          {authedUser === null ? <a className="brand-logo center">Would You Rather</a>
+          {authedUser === null ? <a className="brand-logo center">Would You Rather</a> // navbar content when not logged in
             :
-            <Fragment>
+            <Fragment>{/*Navbar content logged in */}
               <Link to='/'className="brand-logo left" style={{paddingLeft:'1%'}} >Would You Rather</Link>
               <ul id="nav-mobile" className="right">
                 <li><Link to='/'>Home</Link></li>

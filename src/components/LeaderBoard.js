@@ -8,7 +8,7 @@ class LeaderBoard extends Component{
       <div className="container">
         <div className="row">
           <h4 className="center-align red-text text-accent-3">Leaderboard</h4>
-            {userIds.map((user,rank) => (
+            {userIds.map((user,rank) => (// Showing only top three Leaders
               <div key={user} className="card-panel col m6 offset-m3">
                 <div className="row">
                   <div className="col s3">
@@ -68,9 +68,9 @@ class LeaderBoard extends Component{
   }
 }
 
-function getUserDetails(userIds,users,authedUser){
+function getUserDetails(userIds,users,authedUser){// creating user details object
   const userDetails = {}
-  !userIds.includes(authedUser) && userIds.push(authedUser)
+  !userIds.includes(authedUser) && userIds.push(authedUser) // pushing authorized user if notin top three
   userIds.map((user) =>(
     userDetails[user] = {
       id: user,

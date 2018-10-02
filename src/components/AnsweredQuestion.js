@@ -9,8 +9,8 @@ class AnsweredQuestion extends Component{
     const authedUserResponse = users[authedUser].answers[question.id]
     const optionOneVotes = question.optionOne.votes.length
     const optionTwoVotes = question.optionTwo.votes.length
-    const totalVotes = optionOneVotes + optionTwoVotes
-    const optionOnePercent = round(optionOneVotes,totalVotes)
+    const totalVotes = optionOneVotes + optionTwoVotes //calculating percentage
+    const optionOnePercent = round(optionOneVotes,totalVotes)//rounding
     const optionTwoPercent = round(optionTwoVotes,totalVotes)
     return(
       <div className="container">
@@ -34,7 +34,7 @@ class AnsweredQuestion extends Component{
               <div className="row center">
                 <h5 className="left-align">Result:</h5>
                 <div className="box row z-depth-1">
-                  { authedUserResponse === OPTION_ONE &&
+                  { authedUserResponse === OPTION_ONE && // authorized users response check
                       <p style={{color : '#ee6e73'}}><b>Your response</b></p>}
                   <div className="col s12">
                     <h5 className="opt-text"><b>Would you rather {question.optionOne.text} ..?</b></h5>
@@ -71,7 +71,7 @@ class AnsweredQuestion extends Component{
   }
 }
 
-function round(optionVotes,totalVotes){
+function round(optionVotes,totalVotes){// rounding method
   return Math.round(((optionVotes*100/totalVotes) + 0.00001) * 100) / 100
 }
 

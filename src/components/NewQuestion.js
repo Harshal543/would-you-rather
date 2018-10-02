@@ -13,33 +13,33 @@ class NewQuestion extends Component{
   }
 
   handleSubmit = (btn) =>{
-    btn.disabled = true
+    btn.disabled = true // prevent multiple submissions
     let { optionOneText, optionTwoText } = this.state
     optionOneText = optionOneText.trim()
     optionTwoText = optionTwoText.trim()
     optionOneText !== '' && optionTwoText !== '' &&
-      (this.props.dispatch(handleAddQuestion(optionOneText,optionTwoText)) &&
-        this.setState(() => ({
-          submitStatus : true
-        }))
-      )
+      this.props.dispatch(handleAddQuestion(optionOneText,optionTwoText))
+
+    this.setState(() => ({
+      submitStatus : true
+    }))
+
     setTimeout(() => {
       btn.disabled = false
     },1000)
   }
 
   handleChange = (optionText,inputBox) => {
-    optionText.trim() !== '' && (
-      (inputBox === OPTION_ONE) ?
-        this.setState(() => ({
-          optionOneText : optionText
-        }))
-        : (
-          inputBox === OPTION_TWO &&
-            this.setState(() => ({
-              optionTwoText : optionText
-            }))
-        ))
+    (inputBox === OPTION_ONE) ?
+      this.setState(() => ({
+        optionOneText : optionText
+      }))
+      : (
+        inputBox === OPTION_TWO &&
+          this.setState(() => ({
+            optionTwoText : optionText
+          }))
+      )
   }
 
   handleClear = () => {
@@ -52,6 +52,7 @@ class NewQuestion extends Component{
   render(){
     return(
       <div className="container">
+        {/*If submitted question redirect to home*/}
         {this.state.submitStatus && <Redirect to='/' />}
         <h4 className="center-align red-text text-accent-3">Ask New Question</h4>
         <div className="row">

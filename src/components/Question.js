@@ -11,8 +11,9 @@ class Question extends Component{
     return(
       questions[id] ?
         (hasAnsweredQuestion(id,AnswerIds) ? <AnsweredQuestion id={id} />
-          : <UnansweredQuestion id={id}/>)
+          : <UnansweredQuestion id={id}/>) //categorize question according to authorized user
         : <PageNotFound />
+        //question does not exists
     )
   }
 }

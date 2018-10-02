@@ -7,7 +7,7 @@ class HomePage extends Component{
     QuestionType : UNANS_QUES,
   }
 
-  toggleQuestionList = (questionToggle) =>{
+  toggleQuestionList = (questionToggle) =>{ // change state to toggle question list
     this.setState(() => ({
       QuestionType : questionToggle,
     }))
@@ -33,7 +33,7 @@ class HomePage extends Component{
   }
 }
 
-const onHandleToggle = (target,state,toggleFunc) =>{
+const onHandleToggle = (target,state,toggleFunc) =>{ //handling toggle
   const value = target.innerHTML
   const UL = target.parentElement.parentElement
   const parentLi = target.parentElement

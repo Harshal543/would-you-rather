@@ -8,7 +8,8 @@ import NewQuestion from './NewQuestion'
 import Question from './Question'
 import LeaderBoard from './LeaderBoard'
 import Login from './Login'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import PageNotFound from './PageNotFound'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 class App extends Component {
   componentDidMount(){
@@ -22,13 +23,14 @@ class App extends Component {
           <LoadingBar />
           <div className="App">
             {this.props.loading === true ? null
-              : this.props.authedUser === null ? <Login />
-                  :<div>
+              : this.props.authedUser === null ? <Login /> //checking if user is set
+                  :<Switch>{/*match for only one route*/}
                     <Route exact path='/' component={HomePage} />
                     <Route path='/questions/:id' component={Question} />
                     <Route path='/add' component={NewQuestion} />
                     <Route path='/leaderboard' component={LeaderBoard} />
-                  </div>}
+                    <Route component={PageNotFound} />{/*no routes match*/}
+                  </Switch>}
           </div>
         </Fragment>
       </Router>
