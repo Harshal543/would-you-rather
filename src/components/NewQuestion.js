@@ -19,14 +19,12 @@ class NewQuestion extends Component{
     optionTwoText = optionTwoText.trim()
     optionOneText !== '' && optionTwoText !== '' &&
       this.props.dispatch(handleAddQuestion(optionOneText,optionTwoText))
-
-    this.setState(() => ({
-      submitStatus : true
-    }))
-
     setTimeout(() => {
+      this.setState(() => ({
+        submitStatus : true
+      }))
       btn.disabled = false
-    },1000)
+    },500)
   }
 
   handleChange = (optionText,inputBox) => {

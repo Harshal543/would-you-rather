@@ -42,7 +42,6 @@ export default function questions(state = {} ,action){
       }
     case ADD_NEW_QUESTION :
       const { id, timestamp, author, optionOne, optionTwo } = action
-      console.log('reducer',optionOne,optionTwo)
       return {
         ...state,
         [id] : {
